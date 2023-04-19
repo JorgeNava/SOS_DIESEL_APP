@@ -1,23 +1,28 @@
 <template>
-    <h1>{{ msg }}</h1>
     <img :src="imageUrl" alt="tractor image" class="img_tractor">  
 </template>
 
 <script>
-import tractor from "@/components/HomeProduct/img/tractor.png"
 export default {
   name: 'HomeProduct',
   props: {
-    msg: String
+    msg: String,
+    imageUrl: String 
   },
-    data() {
+    /*data() {
         return {
-        imageUrl: tractor,
         };
-    },
+    },*/
 }
 </script>
 
 <style scoped>
-
+    .img_tractor{
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      width: 2000px;
+      padding: 10%;
+    }
 </style>

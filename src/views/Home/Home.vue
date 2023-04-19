@@ -1,17 +1,25 @@
 <template>
   <div class="home">
-    <HomeProduct msg="SOS DIESEL"/>
+    <HomeProduct msg="SOS DIESEL" :imageUrl="imagenTractor"/>
+    <NavBar msg="SOS DIESEL" :imageUrl="logosos"/>
   </div>
 </template>
 
 <script>
 import HomeProduct from "@/components/HomeProduct/HomeProduct.vue"
+import NavBar from "@/components/NavBar/NavBar.vue"
 export default {
     name: "HomeView",
     props: {
         msg: String
     },
-    components: { HomeProduct }
+    data() {
+    return {
+      imagenTractor: require('@/assets/tractor.png'),
+      logosos: require('@/assets/logosos.png')
+    };
+  },
+    components: { HomeProduct, NavBar }
 }
 </script>
 
