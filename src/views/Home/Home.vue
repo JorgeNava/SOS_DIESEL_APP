@@ -1,15 +1,17 @@
 <template>
   <div class="home">
-    <h1>{{ msg }}</h1>
+    <HomeProduct msg="SOS DIESEL"/>
   </div>
 </template>
 
 <script>
+import HomeProduct from "@/components/HomeProduct/HomeProduct.vue"
 export default {
-  name: 'HomeView',
-  props: {
-    msg: String
-  }
+    name: "HomeView",
+    props: {
+        msg: String
+    },
+    components: { HomeProduct }
 }
 </script>
 
