@@ -1,15 +1,19 @@
 <template>
   <div class="home">
     <h1>{{ msg }}</h1>
+    <Carousel />
   </div>
 </template>
 
 <script>
+import Carousel from "@/components/Carousel/Carousel.vue"
+
 export default {
   name: 'HomeView',
   props: {
     msg: String
-  }
+  },
+  components: { Carousel }
 }
 </script>
 
