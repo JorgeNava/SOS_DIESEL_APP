@@ -27,7 +27,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import LocalStorageService from '@/packages/local-storage-service';
+const { getApiClient } = require('@/packages/sos-diesel-api-client');
+const api = getApiClient();
 
 export default {
   name: 'LoginView',
@@ -49,15 +51,19 @@ export default {
   methods: {
     async submitForm() {
       try {
-        //! TODO: RUN API AND CALL AUTH ENDPOINT
-        //! TODO: CREATE SESSION
-        //! TODO: PASS TO ADMIN-PANEL VIEW
-        //! TODO: CREATE ADMIN-PANEL VIEW
-        const response = await axios.post('https://x.com', {
-          email: this.email,
-          password: this.password,
-        });
-        console.log(response.data);
+        const RESPONSE = await api.authenticate(
+          this.email,
+          this.password,
+        );
+        if (RESPONSE !== "isToken") {
+          const USER = await api.post('/users/get-one-by-email', { email: this.email });
+          LocalStorageService.setSession(RESPONSE, USER?.fields);
+          this.$router.push('/admin-panel');
+          //! TODO: IMPROVE LOGIN PAGE
+          //! TODO: CREATE ADMIN-PANEL VIEW
+        } else {
+          //! TODO: MANAGE ERROR IN LOGIN
+        }
       } catch (error) {
         console.error(error);
       }
