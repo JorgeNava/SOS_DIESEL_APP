@@ -2,6 +2,10 @@
   <div class="home">
     <HomeProduct msg="SOS DIESEL" :imageUrl="imagenTractor"/>
     <NavBar msg="SOS DIESEL" :imageUrl="logosos"/>
+    <NavBar msg="SOS DIESEL" :imageUrl1="Kubotalogo"/>
+    <NavBar msg="SOS DIESEL" :imageUrl2="sprinterlogo"/>
+    <NavBar msg="SOS DIESEL" :imageUrl3="yanmarlogo"/>
+    <NavBar msg="SOS DIESEL" :imageUrl4="delivery"/>
   </div>
 </template>
 
@@ -16,7 +20,11 @@ export default {
     data() {
     return {
       imagenTractor: require('@/assets/tractor.png'),
-      logosos: require('@/assets/logosos.png')
+      logosos: require('@/assets/logosos.png'),
+      Kubotalogo: require('@/assets/kubotalogo.png'),
+      sprinterlogo: require('@/assets/sprinterlogo.png'),
+      yanmarlogo: require('@/assets/yanmarlogo.png'),
+      delivery: require('@/assets/delivery.png')
     };
   },
     components: { HomeProduct, NavBar }
