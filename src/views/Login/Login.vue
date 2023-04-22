@@ -72,7 +72,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/global.scss';
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
 *,
 *:before,
