@@ -10,7 +10,6 @@ import 'vuetify/dist/vuetify.min.css'
 import 'vue-material-design-icons/styles.css'
 import '@mdi/font/css/materialdesignicons.css'
 
-
 const vuetify = createVuetify({
   components,
   directives,
