@@ -1,14 +1,23 @@
 <template>
-  <div class="home">
-    <h1>{{ msg }}</h1>
+  <div>
+    <h1>Admin Panel</h1>
+    <v-btn @click="logout">Cerrar sesión</v-btn>
   </div>
 </template>
 
+
 <script>
+import LocalStorageService from '@/packages/local-storage-service'
 export default {
-  name: 'HomeView',
+  name: 'AdminView',
   props: {
     msg: String
+  },
+  methods: {
+    logout() {
+      LocalStorageService.clearSession()
+      this.$router.push('/login')
+    }
   }
 }
 </script>

@@ -1,29 +1,22 @@
 <template>
-  <v-container class="fill-height" fluid>
-    <v-row align="center" justify="center">
-      <v-col class="mx-auto" sm="8" md="6" lg="4">
-        <v-card class="elevation-12 rounded-lg">
-          <v-card-title class="px-6 pt-10">
-            <h2 class="text-center">Login</h2>
-          </v-card-title>
-          <v-card-text>
-            <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field v-model="email" :rules="emailRules" label="Email" outlined required></v-text-field>
-              <v-text-field v-model="password" :rules="passwordRules" label="Password" type="password" outlined
-                required></v-text-field>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="submitForm" :disabled="!valid" class="mx-6 my-4" large elevation="2"
-              :class="{ 'btn-hover': isHovering }" @mouseover="isHovering = true" @mouseleave="isHovering = false">
-              Login
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="container">
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="center">
+      <h2>Please Log In</h2>
+      <input type="email" placeholder="Email" v-model.trim="email" required>
+      <input type="password" placeholder="Password" v-model.trim="password" required>
+      <div v-if="isWrongCredentials" class="error-message">
+        Wrong credentials. Please try again.
+      </div>
+      <v-btn v-if="!isLoading" @click="submitForm" :disabled="!isFormValid" class="mx-6 my-5 login-button" large
+        elevation="2" :class="{ 'btn-hover': isHovering }" @mouseover="isHovering = true"
+        @mouseleave="isHovering = false">
+        Login
+      </v-btn>
+      <v-progress-circular class="my-5" v-else indeterminate color="red"></v-progress-circular>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -36,62 +29,175 @@ export default {
   data() {
     return {
       email: '',
-      emailRules: [
-        (v) => !!v || 'Email is required',
-        (v) => /.+@.+/.test(v) || 'Email must be valid',
-      ],
       password: '',
-      passwordRules: [
-        (v) => !!v || 'Password is required',
-      ],
-      valid: false,
+      isLoading: false,
       isHovering: false,
+      isWrongCredentials: false,
     };
+  },
+  computed: {
+    isNameValid() {
+      return !!this.password && this.password.length >= 3;
+    },
+    isEmailValid() {
+      return !!this.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email);
+    },
+    isFormValid() {
+      return this.isNameValid && this.isEmailValid;
+    },
   },
   methods: {
     async submitForm() {
       try {
+        this.isLoading = true;
         const RESPONSE = await api.authenticate(
           this.email,
           this.password,
         );
-        if (RESPONSE !== "isToken") {
+        if (!(RESPONSE instanceof Error)) {
           const USER = await api.post('/users/get-one-by-email', { email: this.email });
           LocalStorageService.setSession(RESPONSE, USER?.fields);
           this.$router.push('/admin-panel');
-          //! TODO: IMPROVE LOGIN PAGE
-          //! TODO: CREATE ADMIN-PANEL VIEW
         } else {
-          //! TODO: MANAGE ERROR IN LOGIN
+          this.isWrongCredentials = true;
         }
-      } catch (error) {
-        console.error(error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },
 };
 </script>
 
-<style scoped>
-.v-card__title {
-  background-color: #ffffff;
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid #f2f2f2;
+
+<style lang="scss" scoped>
+@import '@/assets/global.scss';
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box
 }
 
-.v-card__actions {
-  background-color: #ffffff;
-  border-top: 1px solid #f2f2f2;
-  border-radius: 0 0 8px 8px;
+body {
+  min-height: 100vh;
+  font-family: 'Raleway', sans-serif;
 }
 
-.btn-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px 0 red !important;
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &:hover,
+  &:active {
+
+    .top,
+    .bottom {
+
+      &:before,
+      &:after {
+        margin-left: 200px;
+        transform-origin: -200px 50%;
+        transition-delay: 0s;
+      }
+    }
+
+    .center {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+  }
 }
 
-.v-card__actions .btn-hover:active {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px 0 rgba(48, 62, 77, 0.2);
+.top,
+.bottom {
+
+  &:before,
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 200vmax;
+    height: 200vmax;
+    top: 50%;
+    left: 50%;
+    margin-top: -100vmax;
+    transform-origin: 0 50%;
+    transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    z-index: 10;
+    opacity: 0.65;
+    transition-delay: 0.2s;
+  }
+}
+
+.top {
+  &:before {
+    transform: rotate(45deg);
+    background: #e46569;
+  }
+
+  &:after {
+    transform: rotate(135deg);
+    background: #ecaf81;
+  }
+}
+
+.bottom {
+  &:before {
+    transform: rotate(-45deg);
+    background: #60b8d4;
+  }
+
+  &:after {
+    transform: rotate(-135deg);
+    background: #3745b5;
+  }
+}
+
+.center {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  transition-delay: 0s;
+  color: #333;
+
+  input {
+    width: 100%;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 1px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+}
+
+.login-button {
+  color: $SECONDARY_COLOR;
+  background-color: $PRIMARY_COLOR;
+}
+
+.btn-hover {
+  background-color: $SECONDARY_COLOR;
+  color: $PRIMARY_COLOR;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }
 </style>

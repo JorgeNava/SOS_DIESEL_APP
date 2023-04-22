@@ -61,8 +61,7 @@ class ApiClient {
       LocalStorageService.setToken(token);
       return token;
     } catch (error) {
-      console.error(error);
-      return null;
+      return error;
     }
   }
 

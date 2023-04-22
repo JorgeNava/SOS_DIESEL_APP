@@ -14,6 +14,5 @@ getApiClient(process.env.VUE_APP_SOS_DIESEL_API_BASE_URL);
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
