@@ -3,14 +3,14 @@
     <h1 class="title">Users</h1>
   </div>
   <div class="d-flex justify-end my-2">
-    <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="deleteUser(item)" color="red"
+    <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="openModal('deleteMany')" color="red"
       :disabled="!selectAll">Eliminar</v-btn>
   </div>
   <v-table fixed-header height="65vh">
     <thead>
       <tr>
         <th class="checkbox--cell">
-          <v-checkbox v-model="selectAll" color="indigo" :value="item" @change="selectAllRows" hide-details></v-checkbox>
+          <v-checkbox v-model="selectAll" color="indigo" @change="selectAllRows" hide-details></v-checkbox>
         </th>
         <th class="email--cell">Correo</th>
         <th class="username--cell">Nombre de usuario</th>
@@ -32,10 +32,10 @@
           </v-chip>
         </td>
         <td class="action-icons">
-          <v-btn icon class="edit-btn mr-2" @click="editUser(item)">
+          <v-btn icon class="edit-btn mr-2" @click="openModal('edit', item)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn icon class="delete-btn" @click="deleteUser(item)">
+          <v-btn icon class="delete-btn" @click="openModal('delete', item)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </td>
@@ -43,10 +43,13 @@
     </tbody>
   </v-table>
   <div class="text-center mt-7">
-    <v-pagination v-model="page" :length="10" :total-visible="5"></v-pagination>
+    <v-pagination :length="10" :total-visible="5"></v-pagination>
   </div>
+
+  <Modal :is-active="showModal" :modal-params="modalParams" @close="closeModal" />
 </template>
 <script>
+import Modal from '@/components/Modal/Modal.vue';
 //! ESTIMATED TIME: 2-3 DAYS (13 HRS)
 //! TO-DO: CREATE EDIT AND REMOVE MODAL - 2HR
 //! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
@@ -55,6 +58,9 @@
 //! TO-DO: MOVE USER MANAGEMENT LAYOUT TO NEW FOLDER 'LAYOUTS' - 1HR
 //! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
 export default {
+  components: {
+    Modal
+  },
   data() {
     return {
       users: [
@@ -169,6 +175,12 @@ export default {
       ],
       bulkActionItems: [],
       selectAll: false,
+      showModal: false,
+      modalParams: {
+        title: '',
+        body: '',
+        actions: ''
+      }
     }
   },
   methods: {
@@ -184,6 +196,39 @@ export default {
       } else {
         this.bulkActionItems = [];
       }
+    },
+    openModal(type, item = {}) {
+      if (type === "edit") {
+        this.modalParams = {
+          title: `Editar ${item.username}`,
+          body: ``,
+          actions: "Guardar",
+          items: JSON.parse(JSON.stringify(item))
+        };
+      } else if (type === "delete") {
+        this.modalParams = {
+          title: `Eliminar ${item.username}`,
+          body: `Se eliminara al usuario ${item.username} con el correo ${item.email}. ¿Proceder con la operación?`,
+          actions: "Eliminar",
+          items: JSON.parse(JSON.stringify(item))
+        };
+      } else if (type === "deleteMany") {
+        this.modalParams = {
+          title: `Eliminar`,
+          body: ``,
+          actions: "Eliminar",
+          items: JSON.parse(JSON.stringify(this.bulkActionItems))
+        };
+      }
+      this.showModal = true;
+    },
+    closeModal() {
+      this.modalParams = {
+        title: '',
+        body: '',
+        actions: ''
+      };
+      this.showModal = false;
     }
   }
 }
