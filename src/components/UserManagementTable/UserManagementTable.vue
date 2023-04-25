@@ -3,8 +3,8 @@
     <h1 class="title">Users</h1>
   </div>
   <div class="d-flex justify-end my-2">
-    <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="openModal('deleteMany')" color="red"
-      :disabled="!selectAll">Eliminar</v-btn>
+    <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="openModal('deleteManyUsers')"
+      color="red" :disabled="!selectAll">Eliminar</v-btn>
   </div>
   <v-table fixed-header height="65vh">
     <thead>
@@ -32,10 +32,10 @@
           </v-chip>
         </td>
         <td class="action-icons">
-          <v-btn icon class="edit-btn mr-2" @click="openModal('edit', item)">
+          <v-btn icon class="edit-btn mr-2" @click="openModal('editOneUser', item)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn icon class="delete-btn" @click="openModal('delete', item)">
+          <v-btn icon class="delete-btn" @click="openModal('deleteOneUser', item)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </td>
@@ -46,20 +46,24 @@
     <v-pagination :length="10" :total-visible="5"></v-pagination>
   </div>
 
-  <Modal :is-active="showModal" :modal-params="modalParams" @close="closeModal" />
+  <BaseModal :is-active="showModal" :type="modalType" :params="modalParams" @close="closeModal" />
 </template>
 <script>
-import Modal from '@/components/Modal/Modal.vue';
+import BaseModal from '@/components/Modal/BaseModal.vue';
 //! ESTIMATED TIME: 2-3 DAYS (13 HRS)
-//! TO-DO: CREATE EDIT AND REMOVE MODAL - 2HR
 //! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
+
+// MARTES
 //! TO-DO: MAKE ACTUAL CALL TO API TO GET ALL USERS - 2HR
-//! TO-DO: MAKE TABLE A COMPONENT ASIDE
-//! TO-DO: MOVE USER MANAGEMENT LAYOUT TO NEW FOLDER 'LAYOUTS' - 1HR
+//! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
 //! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
+
+// MIERCOLES
+//! TO-DO: COPY FUNCTIONALITY FOR PRODUCTS MANAGEMENT
+
 export default {
   components: {
-    Modal
+    BaseModal
   },
   data() {
     return {
@@ -176,6 +180,7 @@ export default {
       bulkActionItems: [],
       selectAll: false,
       showModal: false,
+      modalType: '',
       modalParams: {
         title: '',
         body: '',
@@ -184,12 +189,6 @@ export default {
     }
   },
   methods: {
-    editUser(item) {
-      console.log('[NAVA] clicked Editar:', item);
-    },
-    deleteUser(item) {
-      console.log('[NAVA] clicked Eliminar:', item);
-    },
     selectAllRows() {
       if (this.selectAll) {
         this.bulkActionItems = [...this.users];
@@ -198,28 +197,19 @@ export default {
       }
     },
     openModal(type, item = {}) {
-      if (type === "edit") {
+      if (
+        type === "editOneUser" ||
+        type === "deleteOneUser"
+      ) {
         this.modalParams = {
-          title: `Editar ${item.username}`,
-          body: ``,
-          actions: "Guardar",
-          items: JSON.parse(JSON.stringify(item))
+          item: JSON.parse(JSON.stringify(item))
         };
-      } else if (type === "delete") {
+      } else if (type === "deleteManyUsers") {
         this.modalParams = {
-          title: `Eliminar ${item.username}`,
-          body: `Se eliminara al usuario ${item.username} con el correo ${item.email}. ¿Proceder con la operación?`,
-          actions: "Eliminar",
-          items: JSON.parse(JSON.stringify(item))
-        };
-      } else if (type === "deleteMany") {
-        this.modalParams = {
-          title: `Eliminar`,
-          body: ``,
-          actions: "Eliminar",
           items: JSON.parse(JSON.stringify(this.bulkActionItems))
         };
       }
+      this.modalType = type;
       this.showModal = true;
     },
     closeModal() {

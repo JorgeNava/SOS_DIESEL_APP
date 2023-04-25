@@ -29,7 +29,16 @@
 import LocalStorageService from '@/packages/local-storage-service'
 import UserManagementTable from '@/components/UserManagementTable/UserManagementTable.vue'
 import CatalogManagementTable from '@/components/CatalogManagementTable/CatalogManagementTable.vue'
+//! ESTIMATED TIME: 2-3 DAYS (13 HRS)
+//! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
 
+// MARTES
+//! TO-DO: MAKE ACTUAL CALL TO API TO GET ALL USERS - 2HR
+//! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
+//! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
+
+// MIERCOLES
+//! TO-DO: COPY FUNCTIONALITY FOR PRODUCTS MANAGEMENT
 export default {
   name: 'AdminView',
   components: {
