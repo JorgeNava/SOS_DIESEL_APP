@@ -1,8 +1,8 @@
 <template>
   <div>
     <div id="wrapper">
-      <div id="info">
-        <div id="info-content">
+      <div id="panel">
+        <div id="panel-content">
           <component :is="activeComponent"></component>
         </div>
       </div>
@@ -25,13 +25,20 @@
   </div>
 </template>
 
-
-
 <script>
 import LocalStorageService from '@/packages/local-storage-service'
 import UserManagementTable from '@/components/UserManagementTable/UserManagementTable.vue'
 import CatalogManagementTable from '@/components/CatalogManagementTable/CatalogManagementTable.vue'
+//! ESTIMATED TIME: 2-3 DAYS (13 HRS)
+//! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
 
+// MARTES
+//! TO-DO: MAKE ACTUAL CALL TO API TO GET ALL USERS - 2HR
+//! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
+//! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
+
+// MIERCOLES
+//! TO-DO: COPY FUNCTIONALITY FOR PRODUCTS MANAGEMENT
 export default {
   name: 'AdminView',
   components: {
@@ -40,7 +47,7 @@ export default {
   },
   data() {
     return {
-      activeComponent: 'UserManagementTable'
+      activeComponent: 'UserManagementTable',
     }
   },
   methods: {
@@ -52,12 +59,8 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
-h1 {
-  color: #42b983;
-  margin: 40px 0 0;
-}
+@import '@/assets/global.scss';
 
 /* reset */
 * {
@@ -70,6 +73,8 @@ h1 {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background-size: cover;
+  padding: 4rem 10rem 0rem;
 }
 
 label {
@@ -84,11 +89,12 @@ label {
   position: absolute;
   top: 0;
   left: 0;
-  background: #fff;
   width: 240px;
   height: 100%;
   transform: translate3d(-240px, 0, 0);
   transition: transform 0.35s;
+  background-color: white;
+  z-index: 1;
 
   label.menu-toggle {
     position: absolute;
@@ -140,53 +146,6 @@ label {
   /* fade in checked menu */
   &-checkbox:checked+.menu {
     transform: translate3d(0, 0, 0);
-  }
-}
-
-/* for show */
-html,
-body {
-  height: 100%;
-}
-
-body {
-  background: url(https://37.media.tumblr.com/f6c67ec2821a91051e4175f8a102e1e2/tumblr_n6rzpcsMk41st5lhmo1_1280.jpg) 50% 50% / cover;
-}
-
-p {
-  margin-bottom: 15px;
-}
-
-#info {
-  display: table;
-  background: rgba(0, 0, 0, 0.4);
-  height: 100%;
-  width: 100%;
-
-  #info-content {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 12px;
-
-    h1 {
-      color: #fff;
-      border: 3px solid #fff;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.1);
-      font-size: 22px;
-      font-weight: normal;
-      padding: 20px;
-      margin: 10px;
-      display: inline-block;
-
-      strong {
-        display: block;
-        font-size: 26px;
-      }
-    }
   }
 }
 </style>
