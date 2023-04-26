@@ -6,10 +6,12 @@
     <NavBar msg="SOS DIESEL" :imageUrl2="sprinterlogo"/>
     <NavBar msg="SOS DIESEL" :imageUrl3="yanmarlogo"/>
     <NavBar msg="SOS DIESEL" :imageUrl4="delivery"/>
+    <Carousel />
   </div>
 </template>
 
 <script>
+import Carousel from "@/components/Carousel/Carousel.vue"
 import HomeProduct from "@/components/HomeProduct/HomeProduct.vue"
 import NavBar from "@/components/NavBar/NavBar.vue"
 export default {
@@ -27,7 +29,7 @@ export default {
       delivery: require('@/assets/delivery.png')
     };
   },
-    components: { HomeProduct, NavBar }
+    components: { HomeProduct, NavBar, Carousel }
 }
 </script>
 
