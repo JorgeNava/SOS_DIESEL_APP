@@ -1,5 +1,10 @@
 <template>
-  <div class="container-img">
+
+<meta name="viewport" content="width=device-width, user-scalable=no,
+   initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+ <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+  
+ <div class="container-img">
     <img :src="imageUrl" alt="tractor image" class="img_tractor">  
   </div>
 </template>
@@ -56,13 +61,13 @@ export default {
   }
 
   /* Media query para pantallas de más de 1024px de ancho (computadoras de escritorio y laptops) */
-  @media only screen and (min-width: 1025px) {
+  @media only screen and (min-width: 992px) {
     .container-img {
       height: 100%;
     }
     
     .img_tractor {
-      max-width: 40%;
+      max-width: 50%;
       margin-top: 5%;
       margin-left: 10%;
     }
