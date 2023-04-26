@@ -10,7 +10,7 @@
       :type="show1 ? 'text' : 'password'" :prepend-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="show1 = !show1"></v-text-field>
     <v-text-field clearable label="Nombre de usuario" prepend-inner-icon="mdi-account" variant="outlined"
-      placeholder="nombreDeUsuario" v-model="newUsername"></v-text-field>
+      placeholder="Nombre de usuario" v-model="newUsername"></v-text-field>
     <v-textarea clearable auto-grow label="Notas" variant="outlined" prepend-inner-icon="mdi-note-text"
       placeholder="Notas..." v-model="newNotes"></v-textarea>
     <v-select clearable chips label="Estado" prepend-inner-icon="mdi-list-status" variant="outlined" v-model="newStatus"
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+const { getApiClient } = require('@/packages/sos-diesel-api-client');
+const api = getApiClient();
 
 export default {
   name: 'EditOneUserModal',
@@ -49,16 +51,28 @@ export default {
   },
   methods: {
     close() {
+      console.log('HELLO');
       this.$emit('close');
+      console.log('EMITTED');
     },
-    editUser() {
-      const USER_UPDATED_DATA = {
-        password: this.newPassword,
-        username: this.newUsername,
-        notes: this.newNotes,
-        status: this.newStatus,
+    async editUser() {
+      try {
+        const USER_UPDATED_DATA = {
+          email: this.item?.email,
+          password: this.newPassword,
+          username: this.newUsername,
+          notes: this.newNotes,
+          status: this.newStatus,
+        }
+        const RAW_RESPONSE = await api.post('/users/update-one', USER_UPDATED_DATA);
+        //! TO-DO: CREATE NOTIFICATION COMPONENT AND SHOW SUCCESS OR FAILURE NOTIFICATION
+        console.log('RAW_RESPONSE', RAW_RESPONSE);
+        this.close();
+        this.$emit('userEdited');
+        console.log('DONE');
+      } catch (error) {
+        console.error(error);
       }
-      console.log('[NAVA] USER_UPDATED_DATA :', USER_UPDATED_DATA);
 
     }
   },

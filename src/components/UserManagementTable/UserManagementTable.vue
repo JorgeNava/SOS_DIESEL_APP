@@ -6,7 +6,7 @@
     <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="openModal('deleteManyUsers')"
       color="red" :disabled="!selectAll">Eliminar</v-btn>
   </div>
-  <v-table fixed-header height="65vh">
+  <v-table fixed-header height="55vh">
     <thead>
       <tr>
         <th class="checkbox--cell">
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="item in users" :key="item.username" class="table-row">
+      <tr v-for="(item, index) in displayedUsers" :key="index" class="table-row">
         <td class="checkbox--cell">
           <v-checkbox v-model="bulkActionItems" color="indigo" :value="item" hide-details></v-checkbox>
         </td>
@@ -43,18 +43,22 @@
     </tbody>
   </v-table>
   <div class="text-center mt-7">
-    <v-pagination :length="10" :total-visible="5"></v-pagination>
+    <v-pagination
+      v-model="currentPage"
+      :length="Math.round(totalItems / itemsPerPage)"
+      :total-visible="5"
+    ></v-pagination>
   </div>
-
-  <BaseModal :is-active="showModal" :type="modalType" :params="modalParams" @close="closeModal" />
+  <BaseModal :is-active="showModal" :type="modalType" :params="modalParams" @close="closeModal" @userEdited="getUsers"/>
 </template>
 <script>
 import BaseModal from '@/components/Modal/BaseModal.vue';
-//! ESTIMATED TIME: 2-3 DAYS (13 HRS)
-//! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
+import { CURRENT_PAGE, ITEMS_PER_PAGE } from './constants';
+
+const { getApiClient } = require('@/packages/sos-diesel-api-client');
+const api = getApiClient();
 
 // MARTES
-//! TO-DO: MAKE ACTUAL CALL TO API TO GET ALL USERS - 2HR
 //! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
 //! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
 
@@ -67,116 +71,10 @@ export default {
   },
   data() {
     return {
-      users: [
-        {
-          email: 'jorgenavadelapena@gmail.com',
-          username: 'jorgenavab',
-          notes: 'so fucking hot!',
-          status: 'Active'
-        },
-        {
-          email: 'johndoe@example.com',
-          username: 'johndoe',
-          notes: 'Lorem ipsum dolor sit amet',
-          status: 'Blocked'
-        },
-        {
-          email: 'janedoe@example.com',
-          username: 'janedoe',
-          notes: 'Ut enim ad minim veniam',
-          status: 'Active'
-        },
-        {
-          email: 'alice@example.com',
-          username: 'alice',
-          notes: 'Duis aute irure dolor in reprehenderit',
-          status: 'Blocked'
-        },
-        {
-          email: 'bob@example.com',
-          username: 'bob',
-          notes: 'Excepteur sint occaecat cupidatat non proident',
-          status: 'Active'
-        },
-        {
-          email: 'charlie@example.com',
-          username: 'charlie',
-          notes: 'Sed do eiusmod tempor incididunt',
-          status: 'Blocked'
-        },
-        {
-          email: 'dave@example.com',
-          username: 'dave',
-          notes: 'Consectetur adipiscing elit',
-          status: 'Active'
-        },
-        {
-          email: 'emily@example.com',
-          username: 'emily',
-          notes: 'Nulla consequat massa quis enim',
-          status: 'Blocked'
-        },
-        {
-          email: 'frank@example.com',
-          username: 'frank',
-          notes: 'Nunc id diam vel arcu sodales eleifend',
-          status: 'Active'
-        },
-        {
-          email: 'george@example.com',
-          username: 'george',
-          notes: 'Aliquam erat volutpat',
-          status: 'Blocked'
-        },
-        {
-          email: 'hannah@example.com',
-          username: 'hannah',
-          notes: 'Maecenas ac massa ut ipsum tristique suscipit',
-          status: 'Active'
-        },
-        {
-          email: 'isabel@example.com',
-          username: 'isabel',
-          notes: 'Aenean vitae ex eget ante feugiat efficitur',
-          status: 'Blocked'
-        },
-        {
-          email: 'jacob@example.com',
-          username: 'jacob',
-          notes: 'Vivamus quis justo in sapien mollis bibendum',
-          status: 'Active'
-        },
-        {
-          email: 'kate@example.com',
-          username: 'kate',
-          notes: 'Phasellus a luctus mauris',
-          status: 'Blocked'
-        },
-        {
-          email: 'lucas@example.com',
-          username: 'lucas',
-          notes: 'Fusce sagittis ante a enim maximus iaculis',
-          status: 'Active'
-        },
-        {
-          email: 'maria@example.com',
-          username: 'maria',
-          notes: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas',
-          status: 'Blocked'
-        },
-        {
-          email: 'nathan@example.com',
-          username: 'nathan',
-          notes: 'Integer nec lobortis lorem',
-          status: 'Active'
-        },
-        {
-          email: 'olivia@example.com',
-          username: 'olivia',
-          notes: 'Quisque suscipit nulla in mauris tincidunt venenatis',
-          status: 'Blocked'
-        },
-      ],
+      currentPage: CURRENT_PAGE,
+      itemsPerPage: ITEMS_PER_PAGE,
+      totalItems: 5,
+      users: [],
       bulkActionItems: [],
       selectAll: false,
       showModal: false,
@@ -188,7 +86,31 @@ export default {
       }
     }
   },
+  computed: {
+    displayedUsers() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.users.slice(startIndex, endIndex)
+    }
+  },
+  async created() {
+    try {
+      this.getUsers();
+      this.totalItems = this.users.length; 
+    } catch (error) {
+      console.error(error);
+    }
+  },
   methods: {
+    async getUsers() {
+      const RAW_RESPONSE = await api.get(
+        '/users/get-all',
+      );
+      this.users = RAW_RESPONSE.map(user => {
+        return this.convertKeysToLower(user?.fields);
+      });
+      console.log('this.users',this.users);
+    },
     selectAllRows() {
       if (this.selectAll) {
         this.bulkActionItems = [...this.users];
@@ -213,12 +135,23 @@ export default {
       this.showModal = true;
     },
     closeModal() {
+      console.log('hello 2');
       this.modalParams = {
         title: '',
         body: '',
         actions: ''
       };
       this.showModal = false;
+      console.log('hello 3');
+      //this.getUsers();
+    },
+    convertKeysToLower(obj) {
+      const newObj = {};
+      for (let key in obj) {
+        const newKey = key.charAt(0).toLowerCase() + key.slice(1);
+        newObj[newKey] = obj[key];
+      }
+      return newObj;
     }
   }
 }
@@ -228,6 +161,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.puto{
+  background-color: red;
 }
 
 .title {
