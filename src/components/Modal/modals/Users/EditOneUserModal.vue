@@ -49,12 +49,8 @@ export default {
       newStatus: this.item.status,
     }
   },
+  emits: ['userEdited'],
   methods: {
-    close() {
-      console.log('HELLO');
-      this.$emit('close');
-      console.log('EMITTED');
-    },
     async editUser() {
       try {
         const USER_UPDATED_DATA = {
@@ -65,11 +61,21 @@ export default {
           status: this.newStatus,
         }
         const RAW_RESPONSE = await api.post('/users/update-one', USER_UPDATED_DATA);
-        //! TO-DO: CREATE NOTIFICATION COMPONENT AND SHOW SUCCESS OR FAILURE NOTIFICATION
-        console.log('RAW_RESPONSE', RAW_RESPONSE);
-        this.close();
-        this.$emit('userEdited');
-        console.log('DONE');
+        let alertParams;
+        if (RAW_RESPONSE?.id) {
+          alertParams = {
+            type: 'success',
+            title: 'Usuario actualizado',
+            text: 'Los datos del usuario han sido registrados exitosamente!'
+          }
+        } else {
+          alertParams = {
+            type: 'error',
+            title: 'Error durante actualización',
+            text: 'Los datos del usuario no han podido ser registrados correctamente'
+          }
+        }
+        this.$emit('userEdited', alertParams);
       } catch (error) {
         console.error(error);
       }
@@ -86,7 +92,8 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .modal-header {
   display: flex;
   justify-content: space-between;

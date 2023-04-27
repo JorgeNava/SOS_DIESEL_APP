@@ -17,7 +17,7 @@
             <a href="#" @click="activeComponent = 'CatalogManagementTable'">Catalogo</a>
           </li>
           <li>
-            <v-btn @click="logout">Cerrar sesión</v-btn>
+            <v-btn class="logout--button" @click="logout">Cerrar sesión</v-btn>
           </li>
         </ul>
       </div>
@@ -29,16 +29,16 @@
 import LocalStorageService from '@/packages/local-storage-service'
 import UserManagementTable from '@/components/UserManagementTable/UserManagementTable.vue'
 import CatalogManagementTable from '@/components/CatalogManagementTable/CatalogManagementTable.vue'
-//! ESTIMATED TIME: 2-3 DAYS (13 HRS)
-//! TO-DO: ENABLE PAGINATION AND ADD STYLE - 1HR
-
-// MARTES
-//! TO-DO: MAKE ACTUAL CALL TO API TO GET ALL USERS - 2HR
-//! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
-//! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
 
 // MIERCOLES
+//! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
 //! TO-DO: COPY FUNCTIONALITY FOR PRODUCTS MANAGEMENT
+
+// JUEVES
+//! TO-DO: PROTECT VIEWS BASED IN USER SESSION
+//! TO-DO: FIX RODRIS VIEWS
+//! TO-DO: UPLOAD APP & API TO TEST ENV
+
 export default {
   name: 'AdminView',
   components: {
@@ -77,6 +77,7 @@ export default {
   padding: 4rem 10rem 0rem;
 }
 
+
 label {
   cursor: pointer;
 
@@ -93,8 +94,13 @@ label {
   height: 100%;
   transform: translate3d(-240px, 0, 0);
   transition: transform 0.35s;
-  background-color: white;
+  background-color: #F18383;
   z-index: 1;
+
+  
+  .logout--button{
+    background-color: white;
+  }
 
   label.menu-toggle {
     position: absolute;
@@ -105,10 +111,15 @@ label {
     display: block;
     padding: 0;
     text-indent: -9999px;
-    background: #fff url(https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png) 50% 50% / 25px 25px no-repeat;
+    background: #F18383 url(https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png) 50% 50% / 25px 25px no-repeat;
   }
 
   ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     li {
       display: flex;
       align-items: center;

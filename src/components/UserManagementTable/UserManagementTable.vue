@@ -4,7 +4,7 @@
   </div>
   <div class="d-flex justify-end my-2">
     <v-btn class="delete-btn" prepend-icon="mdi-delete" variant="outlined" @click="openModal('deleteManyUsers')"
-      color="red" :disabled="!selectAll">Eliminar</v-btn>
+      color="red" :disabled="isBulkDeleteDisabled()">Eliminar</v-btn>
   </div>
   <v-table fixed-header height="55vh">
     <thead>
@@ -49,7 +49,16 @@
       :total-visible="5"
     ></v-pagination>
   </div>
-  <BaseModal :is-active="showModal" :type="modalType" :params="modalParams" @close="closeModal" @userEdited="getUsers"/>
+  <BaseModal :is-active="showModal" :type="modalType" :params="modalParams" @close="closeModal" @modalActionTriggered="modalActionTriggered"/>
+  
+  <v-alert
+    closable
+    class="alert"
+    :model-value="isAlertVisible"
+    :type="alertParams.type"
+    :title="alertParams.title"
+    :text="alertParams.text"
+  ></v-alert>
 </template>
 <script>
 import BaseModal from '@/components/Modal/BaseModal.vue';
@@ -57,13 +66,6 @@ import { CURRENT_PAGE, ITEMS_PER_PAGE } from './constants';
 
 const { getApiClient } = require('@/packages/sos-diesel-api-client');
 const api = getApiClient();
-
-// MARTES
-//! TO-DO: MAKE ACTUAL CALL TO API TO UPDATE/DELETE USERS - 2HR
-//! TO-DO: ENHACE MENU STYLE TO MATCH LAYOUTS - 30MIN
-
-// MIERCOLES
-//! TO-DO: COPY FUNCTIONALITY FOR PRODUCTS MANAGEMENT
 
 export default {
   components: {
@@ -83,6 +85,12 @@ export default {
         title: '',
         body: '',
         actions: ''
+      },
+      isAlertVisible: false,
+      alertParams: {
+        type: 'success',
+        title: '',
+        text: ''
       }
     }
   },
@@ -109,7 +117,6 @@ export default {
       this.users = RAW_RESPONSE.map(user => {
         return this.convertKeysToLower(user?.fields);
       });
-      console.log('this.users',this.users);
     },
     selectAllRows() {
       if (this.selectAll) {
@@ -135,15 +142,32 @@ export default {
       this.showModal = true;
     },
     closeModal() {
-      console.log('hello 2');
       this.modalParams = {
         title: '',
         body: '',
         actions: ''
       };
       this.showModal = false;
-      console.log('hello 3');
-      //this.getUsers();
+      if (this.modalType === "deleteManyUsers") {
+        this.selectAll = false;
+        this.bulkActionItems = [];
+      }
+      this.getUsers();
+    },
+    async modalActionTriggered(params) {
+      this.closeModal();
+      this.alertParams = {
+        type: params?.type,
+        title: params?.title,
+        text: params?.text
+      }
+      this.isAlertVisible = true;
+      await new Promise(resolve => setTimeout(resolve, 5000))
+      this.isAlertVisible = false;
+
+    },
+    isBulkDeleteDisabled() {
+      return !this.selectAll && this.bulkActionItems.length === 0;
     },
     convertKeysToLower(obj) {
       const newObj = {};
@@ -157,6 +181,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+.alert{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 1vw;
+  margin-top: 5vh;
+}
+
 .title-container {
   display: flex;
   justify-content: center;

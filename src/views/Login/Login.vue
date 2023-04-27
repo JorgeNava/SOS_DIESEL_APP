@@ -3,16 +3,16 @@
     <div class="top"></div>
     <div class="bottom"></div>
     <div class="center">
-      <h2>Please Log In</h2>
+    <h2>Panel de administración</h2>
       <input type="email" placeholder="Email" v-model.trim="email" required>
       <input type="password" placeholder="Password" v-model.trim="password" required>
       <div v-if="isWrongCredentials" class="error-message">
-        Wrong credentials. Please try again.
+        Credenciales incorrectras. Por favor intenta de nuevo.
       </div>
       <v-btn v-if="!isLoading" @click="submitForm" :disabled="!isFormValid" class="mx-6 my-5 login-button" large
         elevation="2" :class="{ 'btn-hover': isHovering }" @mouseover="isHovering = true"
         @mouseleave="isHovering = false">
-        Login
+        Iniciar sesión
       </v-btn>
       <v-progress-circular class="my-5" v-else indeterminate color="red"></v-progress-circular>
     </div>

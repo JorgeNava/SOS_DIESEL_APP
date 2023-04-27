@@ -18,6 +18,8 @@
 </template>
 
 <script>
+const { getApiClient } = require('@/packages/sos-diesel-api-client');
+const api = getApiClient();
 
 export default {
   name: 'DeleteOneUserModal',
@@ -33,12 +35,31 @@ export default {
       }),
     }
   },
+  emits: ['userRemoved'],
   methods: {
-    close() {
-      this.$emit('close');
-    },
-    deleteUser() {
-      console.log('[NAVA] deleteingONeUser :', this.item);
+    async deleteUser() {
+      try {
+        const USER_EMAIL = this.item?.email;
+        const QUERY = { email: USER_EMAIL}
+        const RAW_RESPONSE = await api.delete('/users/delete-one-by-email', QUERY);
+        let alertParams;
+        if (RAW_RESPONSE?.id) {
+          alertParams = {
+            type: 'success',
+            title: 'Usuario removido',
+            text: 'Los datos del usuario han sido eliminados exitosamente!'
+          }
+        } else {
+          alertParams = {
+            type: 'error',
+            title: 'Error durante la eliminicación',
+            text: 'Los datos del usuario no han podido ser eliminados correctamente'
+          }
+        }
+        this.$emit('userRemoved', alertParams);
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
 };

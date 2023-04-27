@@ -1,15 +1,15 @@
 <template>
-  <div class="modal" :class="{ 'is-active': isActive }" @click="close">
+  <div class="modal" :class="{ 'is-active': isActive }" @click="closeModal">
     <div class="modal-card" @click.stop="">
-      <v-icon size="large" color="red" icon="mdi-window-close" @click="close"></v-icon>
+      <v-icon size="large" color="red" icon="mdi-window-close" @click="closeModal"></v-icon>
       <div v-if="type === 'editOneUser'">
-        <EditOneUserModal :item="params?.item" />
+        <EditOneUserModal :item="params?.item" @userEdited="modalActionTriggered"/>
       </div>
       <div v-else-if="type === 'deleteOneUser'">
-        <DeleteOneUserModal :item="params?.item" />
+        <DeleteOneUserModal :item="params?.item" @userRemoved="modalActionTriggered"/>
       </div>
       <div v-else-if="type === 'deleteManyUsers'">
-        <DeleteManyUsersModal :items="params?.items" />
+        <DeleteManyUsersModal :items="params?.items" @usersRemoved="modalActionTriggered"/>
       </div>
       <div v-else>
         <p>No se encontró ningún componente para el texto ingresado</p>
@@ -46,8 +46,11 @@ export default {
     }
   },
   methods: {
-    close() {
+    closeModal() {
       this.$emit('close');
+    },
+    modalActionTriggered(params) {
+      this.$emit('modalActionTriggered', params);
     },
   },
 };

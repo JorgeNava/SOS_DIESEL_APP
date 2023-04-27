@@ -49,8 +49,8 @@ class ApiClient {
     return response.data;
   }
 
-  async delete(endpoint) {
-    const response = await this.client.delete(endpoint);
+  async delete(endpoint, params) {
+    const response = await this.client.delete(endpoint, { params });
     return response.data;
   }
 

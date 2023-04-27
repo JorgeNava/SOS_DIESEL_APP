@@ -23,7 +23,10 @@
       todos</v-btn>
   </footer>
 </template>
+
 <script>
+const { getApiClient } = require('@/packages/sos-diesel-api-client');
+const api = getApiClient();
 
 export default {
   name: 'DeleteManyUsersModal',
@@ -34,14 +37,31 @@ export default {
       default: () => ([]),
     }
   },
+  emits: ['usersRemoved'],
   methods: {
-    close() {
-      this.$emit('close');
-    },
-    deleteSelectedUsers() {
-      this.items.forEach(item => {
-        console.log('[NAVA] item.email :', item.email);
-      });
+    async deleteSelectedUsers() {
+      try {
+        const USERS_EMAIL = this.items.map(user => user?.email)
+        const QUERY = { emails: USERS_EMAIL}
+        const RAW_RESPONSE = await api.delete('/users/delete-many-by-email', QUERY);
+        let alertParams;
+        if (RAW_RESPONSE.length > 0) {
+          alertParams = {
+            type: 'success',
+            title: 'Usuarios removidos',
+            text: 'Los datos de los usuarios han sido eliminados exitosamente!'
+          }
+        } else {
+          alertParams = {
+            type: 'error',
+            title: 'Error durante la eliminicación',
+            text: 'Los datos de los usuarios no han podido ser eliminados correctamente'
+          }
+        }
+        this.$emit('usersRemoved', alertParams);
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
 };
