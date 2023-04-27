@@ -1,12 +1,21 @@
 <template>
-
   <meta name="viewport" content="width=device-width, user-scalable=no,
-  initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-  <img :src="imageUrl" alt="" class="img_logosos">
+   initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+
+ <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
   <div class="containerPhotos">
-    <img :src="imageUrl1" alt="" class="img_Kubotalogo">
-    <img :src="imageUrl2" alt="" class="img_sprinterlogo">
-    <img :src="imageUrl3" alt="" class="img_yanmarlogo">
+    <img :src="imageUrls.logosos" alt="" class="img_logosos">
+    <div class="imgMarcas">
+      <img :src="imageUrls.Kubotalogo" alt="" class="img_Kubotalogo">
+      <img :src="imageUrls.sprinterlogo" alt="" class="img_sprinterlogo">
+      <img :src="imageUrls.yanmarlogo" alt="" class="img_yanmarlogo">
+    </div>
+    <div class="linkNum">
+      <img :src="imageUrls.delivery" alt="" class="img_delivery">
+      <button style="color:red;" class="buttonDelivery">
+        <a class="link" :href="'tel:' + '(33) 2255 6677'"  style="text-decoration:none"> Linea Directa (33) 2255 6677 </a>
+      </button>
+  </div>
   </div>
 
   <div class="containerButtons">
@@ -15,11 +24,6 @@
     <router-link to="/contacto" class="button-bottom">Contacto</router-link>
   </div>
 
-  <img :src="imageUrl4" alt="" class="img_delivery">
-  <button style="color:red;" class="buttonDelivery">
-    <a class="link" :href="'tel:' + '(33) 2255 6677'"  style="text-decoration:none"> Linea Directa (33) 2255 6677 </a>
-  </button>
-
 </template>
 
 <script>
@@ -27,12 +31,11 @@ export default {
   name: 'NavBar',
   props: {
     msg: String,
-    imageUrl: String,
-    imageUrl1: String,
-    imageUrl2: String,
-    imageUrl3: String,
-    imageUrl4: String
+    imageUrls: Object
   },
+  created(){
+    console.log("this.imageUrls",this.imageUrls)
+  }
     /*data() {
         return {
         };
@@ -46,7 +49,7 @@ export default {
     position: absolute; 
     top: 0; 
     left: 0; 
-    max-width: 19%; 
+    width: 24%; 
     height: auto; 
     padding-top: 5%; 
     padding-left: 5%; 
@@ -81,13 +84,12 @@ export default {
   }
 
   .img_delivery{
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: auto;
-    max-width: 8%;
-    padding-top: 36%;
-    padding-left: 8%;
+    position: relative; 
+    bottom: 30vh; 
+    right: 70vh; 
+    width: 15%; 
+    height: auto;  
+    padding-left: 7%; 
   }
  
 
@@ -101,7 +103,7 @@ export default {
     margin-right: 30vw;
     display: inline-block;
     background-color: white;
-    color: rgb(235, 11, 11);
+    color: rgb(215, 37, 37);
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -116,7 +118,7 @@ export default {
     left: 5vw;
     display: inline-block;
     background-color: white;
-    color: rgb(235, 11, 11);
+    color: rgb(215, 37, 37);
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -128,12 +130,11 @@ export default {
     font-size: 2.4vw;
     position: absolute;
     top: 17vw;
-    left: 5vw;
+    left: 7vw;
     display: inline-block;
     margin-top: 5vw;
-    padding: 0vw 2vw;
     background-color: white;
-    color: rgb(235, 11, 11);
+    color: rgb(215, 37, 37);
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -141,17 +142,25 @@ export default {
 
   .buttonDelivery {
     display: inline-block;
-    width: 20vw;
-    position: absolute;
-    left: 0;
+    width: 11vw;
+    position: relative;
+    right: 93vh;
+    bottom: 25vh;
     font-weight: bold;
     border: none;
     background-color: transparent;
-    margin-top: 0%;
     margin-left: 3%;
-    font-size: 2vw;
+    font-size: 3vh;
     cursor: pointer;
     text-decoration: none;
+  }
+
+
+  .linkNum{
+    position: relative;
+    width: 90%;
+    left: 22vh;
+    top: 0vh;
   }
   
   /* Estilo para cuando el mouse pasa sobre el botón */
@@ -188,7 +197,14 @@ export default {
   }
 
   .link { 
-    color: rgb(235, 11, 11); 
+    color: rgb(215, 37, 37); 
+  }
+
+  .imgMarcas {
+    position: relative;
+    width: 100%;
+    bottom: 100vh;
+    right: 7vh;
   }
 
   @media (max-width: 767px) {
@@ -199,7 +215,7 @@ export default {
 }
 
   /* Media query para pantallas de hasta 1024px de ancho (tablets y celulares en posición horizontal) */
-  @media only screen and (max-width: 1024px) {
+  @media only screen and (max-width: 992px) {
     .container {
       width: 90%;
       padding: 0 10px;
@@ -207,11 +223,11 @@ export default {
     .img_logosos{
     position: absolute; 
     top: 0; 
-    left: 0; 
-    max-width: 19%; 
+    left: 4%; 
+    width: 20%; 
     height: auto; 
     padding-top: 35%; 
-    padding-left: 5%; 
+    padding-left: 1%; 
   }
 
   .img_Kubotalogo{
@@ -237,9 +253,10 @@ export default {
 
   .img_delivery{
     height: auto;
-    max-width: 8%;
-    padding-top: 81%;
-    padding-left: 9%;
+    position: relative;
+    width: 25%;
+    right: 19vh;
+    top: 4vh;
   }
  
 
@@ -256,8 +273,26 @@ export default {
   }
 
   .buttonDelivery {
-    top: 45em;
-    left: 0.5em;
+    height: auto;
+    font-size: 100%;
+    top: 6vh;
+    right: 25vh;
+    width: 28%;
+  }
+
+  .imgMarcas {
+    position: absolute;
+    width: 85%;
+    bottom: 92vh;
+    right: 2vh;
+  }
+
+  .linkNum {
+    position: relative;
+    height: auto;
+    font-size: larger;
+    width: 54%;
+    left: 15vh;
   }
 
   }
