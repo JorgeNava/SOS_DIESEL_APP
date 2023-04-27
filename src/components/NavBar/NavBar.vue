@@ -87,7 +87,7 @@ export default {
     position: relative; 
     bottom: 30vh; 
     right: 70vh; 
-    width: 13%; 
+    width: 15%; 
     height: auto;  
     padding-left: 7%; 
   }

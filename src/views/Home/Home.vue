@@ -2,6 +2,22 @@
   <div class="home">
     <HomeProduct msg="SOS DIESEL" :imageUrl="imageUrls.imagenTractor"/>
     <NavBar msg="SOS DIESEL" :imageUrls="imageUrls"/>
+    <div class="mision">
+      <h1>Mision y Vision</h1>
+      <div class="container">
+        <div class="image">
+          <img src="@/assets/img_panel_testimonials.jpg" alt="" style="height: 60vh;">
+        </div>
+        <div class="content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+        </div>
+      </div>
+    </div>
     <div class="FotosRandom">
       <Carousel :slides="carouselImages" />
       <router-link :to="viewMoreUrl" class="ver-mas">Ver más</router-link>  
@@ -130,6 +146,39 @@ export default {
   .ver-mas:hover {
   background-color: #1063bc;
   color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* centrar horizontalmente */
+  align-items: flex-start; /* alinear arriba */
+}
+
+.content {
+  margin-top: 15vh;
+  max-width: 50%;
+  padding-left: 20vh; /* separación del texto con la imagen */
+}
+
+.image {
+  width: 50%;
+  margin-top: 15vh;
+  margin-left: 50vh; /* separación de la imagen con el texto */
+  box-sizing: border-box;
+}
+
+.mision {
+  height: 100vh;
+  background: whitesmoke;
+}
+
+h1 {
+  padding-top: 2%;
+ 
+}
+
+.mision {
+  height: 100vh;
 }
 
 </style>

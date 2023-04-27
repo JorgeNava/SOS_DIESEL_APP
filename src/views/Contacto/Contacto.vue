@@ -35,9 +35,9 @@
     background: rgb(211, 207, 207);
     z-index: 1; /* Asegura que el formulario esté por encima del fondo */
     font-family: Arial, sans-serif;
-    max-width: 25em;
+    max-width: 35em;
     margin: 0 auto;
-    padding: 20px 30px;
+    padding: 8vh 9vh;
     border: 1px solid #eee;
     border-radius: 10px;
     top: 55%;
@@ -57,13 +57,13 @@
   
   h2 {
     margin-top: 1em;
-    font-size: 28px;
+    font-size: 50px;
     text-align: center;
   }
   
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 3em;
     font-size: 20px;
   }
   
@@ -93,29 +93,51 @@
     width: 100%;
   }
   
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 1025px) {
     .formulario-contacto {
-      max-width: 90%;
-      font-size: 14px;
-    }
+    position: absolute;
+    font-size: 15px;
+    left: 50%;
+    top: 41%;
+    transform: translate(-50%, -27%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh 5vh; /* reducir el espacio vertical y horizontal */
+    width: 75%; /* ajustar el ancho */
+    height: 73%;
+  }
+  h2 {
+    margin-bottom: 1em;
+    font-size: 35px;
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 1em;
+    font-size: 20px;
+  }
     
     input,
     textarea {
-      font-size: 1em;
+      font-size: 1vh;
     }
     
     button[type="submit"] {
-      font-size: 1em;
+      font-size: 1vh;
     }
   }
 
   .logo{
     position: absolute;
-    top: 10%;
-    left: 5%;
+    top: 3%;
+    left: 3%;
     cursor: pointer;
   }
   .logo img {
     height: 9em; /* ajusta la altura según sea necesario */
   }
+    
   </style>
