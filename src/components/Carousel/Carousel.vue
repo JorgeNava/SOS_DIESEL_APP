@@ -1,16 +1,22 @@
 <template>
-  <v-carousel cycle height="1200" hide-delimiter-background show-arrows="hover" >
-    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-      <v-sheet :color="colors[i]" height="100%">
-        <div class="d-flex fill-height justify-center align-center" >
-          <div class="text-h2" >
-            <img :src="slide.imageUrl" :alt="slide.description" style="object-fit: contain; max-height: 580px; max-width: 480px;"/>
-            <p>{{ slide.description }}</p>
-            <p>{{ slide.price }}</p>
-            <p>{{ slide.marca }}</p>
-            <p>{{ slide.parte }}</p>
+  <v-carousel cycle hide-delimiters show-arrows="hover" >
+    <v-carousel-item class="w-100" v-for="(slide, i) in slides" :key="i" color="gray">
+      <v-sheet class="carousel--sheet w-100 h-100">
+        <v-card class="d-flex justify-center text-left h-75 carousel--card w-100">
+          <div class="w-25 h-100">
+            <v-card-item>
+              <v-card-subtitle>{{ slide.marca }}</v-card-subtitle>
+              <v-card-title>{{slide.code}}</v-card-title>
+            </v-card-item>
+            <v-card-text class="d-flex flex-column justify-space-between h-50">
+              <p>{{ slide.description }}</p>
+              <p class="mt-10">{{ slide.price }}</p>
+            </v-card-text>
           </div>
-        </div>
+          <div class="product--image--container">
+            <img :src="slide.imageUrl" :alt="slide.description"/>
+          </div>
+        </v-card>
       </v-sheet>
     </v-carousel-item>
   </v-carousel>
@@ -21,19 +27,12 @@ export default {
   name: 'CarouselComponent',
   data() {
     return {
-      colors: [
-        'indigo',
-        'warning',
-        'pink darken-2',
-        'red lighten-1',
-        'deep-purple accent-4',
-      ],
       slides: [
-        {imageUrl: require('@/assets/img1.png'), description: 'Description 1', price: '$10', marca: 'ejemploMarca', parte: 'Numero de parte: #001'},
-        {imageUrl: require('@/assets/img2.png'), description: 'Description 2', price: '$20', marca: 'ejemploMarca', parte: 'Numero de parte: #002'},
-        {imageUrl: require('@/assets/img3.png'), description: 'Description 3', price: '$30', marca: 'ejemploMarca', parte: 'Numero de parte: #003'},
-        {imageUrl: require('@/assets/img4.png'), description: 'Description 4', price: '$40', marca: 'ejemploMarca', parte: 'Numero de parte: #004'},
-        {imageUrl: require('@/assets/img5.png'), description: 'Description 5', price: '$50', marca: 'ejemploMarca', parte: 'Numero de parte: #005'},
+        {imageUrl: require('@/assets/img1.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$10', marca: 'ejemploMarca', code: 'Numero de parte: #001'},
+        {imageUrl: require('@/assets/img2.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$20', marca: 'ejemploMarca', code: 'Numero de parte: #002'},
+        {imageUrl: require('@/assets/img3.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$30', marca: 'ejemploMarca', code: 'Numero de parte: #003'},
+        {imageUrl: require('@/assets/img4.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$40', marca: 'ejemploMarca', code: 'Numero de parte: #004'},
+        {imageUrl: require('@/assets/img5.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$50', marca: 'ejemploMarca', code: 'Numero de parte: #005'},
       ],
     }
   }
@@ -41,33 +40,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.text-h2 {
+.carousel--sheet{
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap-reverse; /* Revertir el orden de flex-wrap */
 }
 
-.text-h2 p {
-  margin: 0;
-  flex-basis: 50%; /* Ancho del 50% para los párrafos */
-  padding-bottom: 5%;
+.carousel--card{
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 1%;
 }
-
-.text-h2 img {
-  margin-bottom: 8%;
-  max-width: 80%; /* Ancho máximo de la imagen */
-  margin-left: 81vh; /* Margen izquierdo para separar la imagen del texto */
-  order: 2; /* Cambiar el orden de la imagen */
-}
-
-.text-h2 .content {
+.product--image--container{
+  padding-left: 2vw;
   display: flex;
-  flex-direction: column;
-}
+  align-items: center;
 
-.text-h2 .content p {
-  margin-bottom: 1rem;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
 </style>

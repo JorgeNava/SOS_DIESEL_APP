@@ -1,11 +1,10 @@
 <template>
-  <meta name="viewport" content="width=device-width, user-scalable=no,
-   initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
-
- <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0">
+  <!-- TO-DO: HACER RELATIVO Y PONER ORDEN-->
+  <!-- TO-DO: DIVISION LOGICA POR BOTONES Y FOTOS-->
   <div class="containerPhotos">
     <img :src="imageUrls.logosos" alt="" class="img_logosos">
     <div class="imgMarcas">
+      <!-- TO-DO: CLASES CSS EN COMUN -->
       <img :src="imageUrls.Kubotalogo" alt="" class="img_Kubotalogo">
       <img :src="imageUrls.sprinterlogo" alt="" class="img_sprinterlogo">
       <img :src="imageUrls.yanmarlogo" alt="" class="img_yanmarlogo">
@@ -44,42 +43,43 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .img_logosos{
     position: absolute; 
     top: 0; 
     left: 0; 
-    width: 24%; 
+    width: 17%; 
     height: auto; 
-    padding-top: 5%; 
-    padding-left: 5%; 
+    padding-top: 4%;
+    //! TO-DO: DIFERENCIA SOBRE EL USO DE MARGIN Y PADDING
+    margin-left: 5%; 
   }
 
   .img_Kubotalogo{
     position: absolute;
-    right: 0;
+    right: -35px;
     top: 0;
     height: auto;
     max-width: 12%;
-    padding-top: 8%;
+    padding-top: 16%;
     padding-right: 2%;
   }
 
   .img_sprinterlogo{
     position: absolute;
-    right: 0;
+    right: -35px;
     top: 0;
     max-width: 12%;
-    padding-top: 26%;
+    padding-top: 33%;
     padding-right: 2%;
   }
 
   .img_yanmarlogo{
     position: absolute;
-    right: 0;
+    right: -35px;
     top: 0;
     max-width: 12%;
-    padding-top: 14%;
+    padding-top: 22%;
     padding-right: 2%;
   }
 
@@ -95,12 +95,14 @@ export default {
 
   .button {
     font-weight: bold;
-    font-size: 2.4vw;
+    font-size: 1.8vw;
     position: absolute;
-    top: 18vw;
-    left: 4.5vw;
-    margin-left: 1vw;
-    margin-right: 30vw;
+    top: 28%;
+    left: 5%;
+    width: 17%;
+    //TO-DO: MUCHAS COSAS PASANDO EN EL CSS
+    //margin-left: 1vw;
+    //margin-right: 30vw;
     display: inline-block;
     background-color: white;
     color: rgb(215, 37, 37);
@@ -110,12 +112,13 @@ export default {
   }
 
   .button-top {
-    width: 19%;
+    //! TO-DO: CLASES CSS COMUNES
+    width: 17%;
     font-weight: bold;
-    font-size: 2.4vw;
+    font-size: 1.8vw;
     position: absolute;
-    top: 14vw;
-    left: 5vw;
+    top: 22%;
+    left: 5%;
     display: inline-block;
     background-color: white;
     color: rgb(215, 37, 37);
@@ -125,12 +128,12 @@ export default {
   }
 
   .button-bottom {
-    width: 15%;
+    width: 17%;
     font-weight: bold;
-    font-size: 2.4vw;
+    font-size: 1.8vw;
     position: absolute;
-    top: 17vw;
-    left: 7vw;
+    top: 25%;
+    left: 5%;
     display: inline-block;
     margin-top: 5vw;
     background-color: white;
@@ -159,7 +162,7 @@ export default {
   .linkNum{
     position: relative;
     width: 90%;
-    left: 22vh;
+    left: 10%;
     top: 0vh;
   }
   
@@ -236,16 +239,16 @@ export default {
     padding-top: 40%;
     padding-right: 2%;
   }
-
+  
   .img_sprinterlogo{
     height: auto;
     max-width: 14%;
     padding-top: 58%;
     padding-right: 2%;
   }
-
+  
   .img_yanmarlogo{
-     height: auto;
+    height: auto;
      max-width: 13%;
     padding-top: 47%;
     padding-right: 2%;

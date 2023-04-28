@@ -1,31 +1,41 @@
 <template>
   <div class="home">
+    <!-- TO-DO: SACAR IMAGEN DE COMPONENTE -->
     <HomeProduct msg="SOS DIESEL" :imageUrl="imageUrls.imagenTractor"/>
+    <!-- TO-DO: REMOVER INPUTS -->
+    <!-- TO-DO: SACAR PILA DE MARCAS DEL COMPONENTE -->
     <NavBar msg="SOS DIESEL" :imageUrls="imageUrls"/>
+    <!-- TO-DO: CLASE EN COMUN 'SECTION' -->
     <div class="mision">
-      <h1>Mision y Vision</h1>
+      <!-- TO-DO: SECCIONAR CON DIVS Y POSICION Y ESPACIAMIENTO RELATIVO -->
       <div class="container">
         <div class="image">
-          <img src="@/assets/img_panel_testimonials.jpg" alt="" style="height: 60vh;">
+          <img src="@/assets/img_panel_testimonials.jpg" alt="" >
         </div>
         <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit. Integer bibendum erat augue, nec sollicitudin libero semper vitae. Sed ac elit eget nulla finibus hendrerit ac non lectus.</p>
+          <h1 class="mision-y-vision--title">SOS DIESEL PARTS</h1>
+          <p class="mision-y-vision--subtitle">MISION Y VISIÓN</p>
+          <div class="mision-y-vision--text">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="FotosRandom">
-      <Carousel :slides="carouselImages" />
-      <router-link :to="viewMoreUrl" class="ver-mas">Ver más</router-link>  
+    <div class="fotosRandom">
+      <div class="carousel--container">
+        <Carousel :slides="carouselImages" />
+      </div>
+      <!-- TO-DO: DISEÑO DE BOTONES -->
+      <router-link :to="viewMoreUrl" class="ver-mas">Ver catálogo</router-link>  
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Footer from "@/components/Footer/Footer.vue";
 import Carousel from "@/components/Carousel/Carousel.vue";
 import HomeProduct from "@/components/HomeProduct/HomeProduct.vue";
 import NavBar from "@/components/NavBar/NavBar.vue";
@@ -115,7 +125,7 @@ export default {
       viewMoreUrl: "/productos"
     };
   },
-  components: { HomeProduct, NavBar, Carousel }
+  components: { HomeProduct, NavBar, Carousel, Footer }
 };
 </script>
 
@@ -124,61 +134,87 @@ export default {
     height: 100vh;
   }
 
-  .FotosRandom {
-    height: 100vh;
+  .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* centrar horizontalmente */
+    align-items: flex-start; /* alinear arriba */
+    padding-top: 6.5vh;
+  }
+
+  .content {
+    max-width: 50%;
+    text-align: left;
+  }
+
+  .image img{
+    width: 28vw;
+    margin-left: 17vw;
+    margin-right: 4.5vw;
+  }
+
+  //! TO-DO: CSS REPETIDO
+  .mision {
+    height: 100vh;
+  }
+
+  h1 {
+    padding-top: 2%;
+  
+  }
+
+  .mision {
+    height: 100vh;
+  }
+
+  .mision-y-vision {
+    &--title{
+      margin-top: 2vh;
+      margin-bottom: 4vh;
+      font-size: 2.5rem;
+      line-height: 1.2;
+      font-family: 'Helvetica-SOS';
+      font-weight: 500;
+      color: #C1272D;
+    }
+    &--subtitle{
+      font-weight: bold;
+      font-size: 1.6rem;
+      font-family: 'Helvetica-SOS';
+      margin-bottom: 2vh;
+    }
+    &--text{
+      width: 80%;
+      word-wrap: break-word;
+      font-size: 1.2rem;
+    }
+  }
+
+  .fotosRandom {
+    display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    align-items: center;
+    margin-bottom: 10vh;
+  }
+  .carousel--container{
+    height: fit-content;
+    width: 100%;
   }
 
   .ver-mas {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #ff0d00;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #C1272D;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+    line-height: 1.2;
+
+    &:hover {
+    background-color: white;
+    color: #C1272D;
+    border: 1px solid #C1272D;
   }
-
-  .ver-mas:hover {
-  background-color: #1063bc;
-  color: #fff;
-}
-
-.container {
-  display: flex;
-  justify-content: center; /* centrar horizontalmente */
-  align-items: flex-start; /* alinear arriba */
-}
-
-.content {
-  margin-top: 15vh;
-  max-width: 50%;
-  padding-left: 20vh; /* separación del texto con la imagen */
-}
-
-.image {
-  width: 50%;
-  margin-top: 15vh;
-  margin-left: 50vh; /* separación de la imagen con el texto */
-  box-sizing: border-box;
-}
-
-.mision {
-  height: 100vh;
-  background: whitesmoke;
-}
-
-h1 {
-  padding-top: 2%;
- 
-}
-
-.mision {
-  height: 100vh;
-}
-
+  }
 </style>
