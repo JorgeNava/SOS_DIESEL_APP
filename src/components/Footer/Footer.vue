@@ -28,21 +28,34 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
-  .footer--container{
-    background-color: #C1272D;
-    font-family: 'Helvetica-SOS';
-    color: white;
-    font-size: 1.15rem;
-    .phone--number{
-      color: white !important;
-      text-decoration: none;
-    }
-  }
-  .address{
-    height: fit-content;
-  }
-  #logo--container{
-    padding: 3vh 10vw;
-  }
+.footer--container {
+  background-color: #C1272D;
+  font-family: 'Helvetica-SOS';
+  color: white;
+  font-size: 1.15rem;
+}
+
+.logo--image {
+  max-height: 50px;
+}
+
+.phone--number {
+  color: white;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.address {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+#logo--container {
+  display: flex;
+  align-items: center;
+  padding: 3vh 10vw;
+}
 </style>

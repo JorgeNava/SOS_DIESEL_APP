@@ -12,15 +12,15 @@
     <div class="linkNum">
       <img :src="imageUrls.delivery" alt="" class="img_delivery">
       <button style="color:red;" class="buttonDelivery">
-        <a class="link" :href="'tel:' + '(33) 2255 6677'"  style="text-decoration:none"> Linea Directa (33) 2255 6677 </a>
+        <a class="link" :href="'tel:' + '(33) 2255 6677'"  style="text-decoration:none" > Linea Directa (33) 2255 6677 </a>
       </button>
   </div>
   </div>
 
   <div class="containerButtons">
-    <router-link to="/productos" class="button-top">Productos</router-link>
-    <router-link to="/quienes-somos" class="button" >Quienes Somos </router-link>
-    <router-link to="/contacto" class="button-bottom">Contacto</router-link>
+    <router-link to="/productos" class="button-top" style="font-family: 'Helvetica-SOS'">Productos</router-link>
+    <router-link to="/#mision"  @click="scrolltoMission" class="button" style="font-family: 'Helvetica-SOS'">Quienes Somos </router-link>
+    <router-link to="/contacto" class="button-bottom" style="font-family: 'Helvetica-SOS'">Contacto</router-link>
   </div>
 
 </template>
@@ -32,6 +32,15 @@ export default {
     msg: String,
     imageUrls: Object
   },
+  methods: {
+  scrolltoMission() {
+    this.$router.push("/#mision");
+    setTimeout(() => {
+      const missionSection = document.querySelector("#mision");
+      missionSection.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  }
+},
   created(){
     console.log("this.imageUrls",this.imageUrls)
   }
@@ -145,7 +154,7 @@ export default {
 
   .buttonDelivery {
     display: inline-block;
-    width: 11vw;
+    width: 14vw;
     position: relative;
     right: 93vh;
     bottom: 25vh;
@@ -200,7 +209,8 @@ export default {
   }
 
   .link { 
-    color: rgb(215, 37, 37); 
+    color: rgb(215, 37, 37);
+    font-family: Helvetica-SOS; 
   }
 
   .imgMarcas {

@@ -2,20 +2,21 @@
   <v-carousel cycle hide-delimiters show-arrows="hover" >
     <v-carousel-item class="w-100" v-for="(slide, i) in slides" :key="i" color="gray">
       <v-sheet class="carousel--sheet w-100 h-100">
-        <v-card class="d-flex justify-center text-left h-75 carousel--card w-100">
+        <v-card class="d-flex justify-center text-left h-75 carousel--card w-100" elevation="10">
           <div class="w-25 h-100">
             <v-card-item>
               <v-card-subtitle>{{ slide.marca }}</v-card-subtitle>
               <v-card-title>{{slide.code}}</v-card-title>
             </v-card-item>
             <v-card-text class="d-flex flex-column justify-space-between h-50">
-              <p>{{ slide.description }}</p>
+              <p style="font-size: 18px;">{{ slide.description }}</p>
               <p class="mt-10">{{ slide.price }}</p>
             </v-card-text>
           </div>
           <div class="product--image--container">
             <img :src="slide.imageUrl" :alt="slide.description"/>
           </div>
+          <div class="w-5 h-100 d-flex flex-column justify-content-between ml-3"></div>
         </v-card>
       </v-sheet>
     </v-carousel-item>
@@ -24,7 +25,7 @@
 
 <script>
 export default {
-  name: 'CarouselComponent',
+  name: 'carouselHome',
   data() {
     return {
       slides: [
@@ -46,22 +47,33 @@ export default {
 }
 
 .carousel--card{
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
+  border: 2px solid #E5E5E5;
+  background-color: #FAFAFA;
   padding: 1%;
-}
-.product--image--container{
-  padding-left: 2vw;
   display: flex;
   align-items: center;
+}
+
+.product--image--container{
+  width: 14%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 10px #6e1c06;
 
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
   }
 }
 
+.v-card__text p {
+  font-size: 1.2rem;
+}
+
+.v-card__subtitle, .v-card__title {
+  font-size: 1.3rem;
+}
 </style>
