@@ -6,15 +6,15 @@
     <!-- TO-DO: SACAR PILA DE MARCAS DEL COMPONENTE -->
     <NavBar msg="SOS DIESEL" :imageUrls="imageUrls"/>
     <!-- TO-DO: CLASE EN COMUN 'SECTION' -->
-    <div class="mision">
+    <div id="mision">
       <!-- TO-DO: SECCIONAR CON DIVS Y POSICION Y ESPACIAMIENTO RELATIVO -->
       <div class="container">
         <div class="image">
           <img src="@/assets/img_panel_testimonials.jpg" alt="" >
         </div>
         <div class="content">
-          <h1 class="mision-y-vision--title">SOS DIESEL PARTS</h1>
-          <p class="mision-y-vision--subtitle">MISION Y VISIÓN</p>
+          <h1 class="mision-y-vision--title"  style="font-family: 'Helvetica-SOS'">SOS DIESEL PARTS</h1>
+          <p class="mision-y-vision--subtitle"  style="font-family: 'Helvetica-SOS'">MISION Y VISIÓN</p>
           <div class="mision-y-vision--text">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.</p>
@@ -24,11 +24,11 @@
       </div>
     </div>
     <div class="fotosRandom">
-      <div class="carousel--container">
-        <Carousel :slides="carouselImages" />
+      <div class="carousel--container" >Carousel
+        <carouselHome :slides="carouselImages" />
       </div>
       <!-- TO-DO: DISEÑO DE BOTONES -->
-      <router-link :to="viewMoreUrl" class="ver-mas">Ver catálogo</router-link>  
+      <router-link :to="viewMoreUrl" class="ver-mas" style="font-family: 'Helvetica-SOS'">Ver catálogo</router-link>  
     </div>
     <Footer />
   </div>
@@ -36,7 +36,7 @@
 
 <script>
 import Footer from "@/components/Footer/Footer.vue";
-import Carousel from "@/components/Carousel/Carousel.vue";
+import carouselHome from "@/components/Carousel/carouselHome.vue";
 import HomeProduct from "@/components/HomeProduct/HomeProduct.vue";
 import NavBar from "@/components/NavBar/NavBar.vue";
 import IMAGEN_TRACTOR from "@/assets/tractor.png";
@@ -125,7 +125,7 @@ export default {
       viewMoreUrl: "/productos"
     };
   },
-  components: { HomeProduct, NavBar, Carousel, Footer }
+  components: { HomeProduct, NavBar, carouselHome, Footer }
 };
 </script>
 
@@ -153,17 +153,13 @@ export default {
   }
 
   //! TO-DO: CSS REPETIDO
-  .mision {
+  #mision {
     height: 100vh;
   }
 
   h1 {
     padding-top: 2%;
   
-  }
-
-  .mision {
-    height: 100vh;
   }
 
   .mision-y-vision {
@@ -208,7 +204,7 @@ export default {
     text-decoration: none;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.2;
 
     &:hover {
