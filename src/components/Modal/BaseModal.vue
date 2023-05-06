@@ -3,13 +3,13 @@
     <div class="modal-card" @click.stop="">
       <v-icon size="large" color="red" icon="mdi-window-close" @click="closeModal"></v-icon>
       <div v-if="type === 'editOneUser'">
-        <EditOneUserModal :item="params?.item" @userEdited="modalActionTriggered"/>
+        <EditOneUserModal :item="params" @userEdited="modalActionTriggered"/>
       </div>
       <div v-else-if="type === 'deleteOneUser'">
-        <DeleteOneUserModal :item="params?.item" @userRemoved="modalActionTriggered"/>
+        <DeleteOneUserModal :item="params" @userRemoved="modalActionTriggered"/>
       </div>
       <div v-else-if="type === 'deleteManyUsers'">
-        <DeleteManyUsersModal :items="params?.items" @usersRemoved="modalActionTriggered"/>
+        <DeleteManyUsersModal :items="params" @usersRemoved="modalActionTriggered"/>
       </div>
       <div v-else>
         <p>No se encontró ningún componente para el texto ingresado</p>

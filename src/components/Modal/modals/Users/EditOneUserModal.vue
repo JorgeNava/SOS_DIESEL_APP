@@ -50,6 +50,14 @@ export default {
     }
   },
   emits: ['userEdited'],
+  watch: {
+    item: function (item) {
+      this.newPassword = '';
+      this.newUsername = item.username;
+      this.newNotes = item.notes;
+      this.newStatus = item.status;
+    }
+  },
   methods: {
     async editUser() {
       try {

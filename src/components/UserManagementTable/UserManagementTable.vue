@@ -130,9 +130,7 @@ export default {
         type === "editOneUser" ||
         type === "deleteOneUser"
       ) {
-        this.modalParams = {
-          item: JSON.parse(JSON.stringify(item))
-        };
+        this.modalParams = item;
       } else if (type === "deleteManyUsers") {
         this.modalParams = {
           items: JSON.parse(JSON.stringify(this.bulkActionItems))
