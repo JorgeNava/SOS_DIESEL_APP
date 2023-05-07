@@ -193,7 +193,7 @@ export default {
   }
   .carousel--container{
     height: fit-content;
-    width: 100%;
+    width: 27%;
   }
 
   .ver-mas {

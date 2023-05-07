@@ -1,79 +1,105 @@
 <template>
-  <v-carousel cycle hide-delimiters show-arrows="hover" >
-    <v-carousel-item class="w-100" v-for="(slide, i) in slides" :key="i" color="gray">
-      <v-sheet class="carousel--sheet w-100 h-100">
-        <v-card class="d-flex justify-center text-left h-75 carousel--card w-100" elevation="10">
-          <div class="w-25 h-100">
-            <v-card-item>
-              <v-card-subtitle>{{ slide.marca }}</v-card-subtitle>
-              <v-card-title>{{slide.code}}</v-card-title>
-            </v-card-item>
-            <v-card-text class="d-flex flex-column justify-space-between h-50">
-              <p style="font-size: 18px;">{{ slide.description }}</p>
-              <p class="mt-10">{{ slide.price }}</p>
-            </v-card-text>
-          </div>
-          <div class="product--image--container">
-            <img :src="slide.imageUrl" :alt="slide.description"/>
-          </div>
-          <div class="w-5 h-100 d-flex flex-column justify-content-between ml-3"></div>
-        </v-card>
-      </v-sheet>
+  <v-carousel  cycle height="580" :parallax-depth="0.5" class="custom-carousel">
+    <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src" :parallax="parallax" class="custom-carousel-item">
+      <v-row class="fill-height" align="center" justify="center">
+        <v-col cols="12" sm="8" md="6">
+          <v-card class="transparent">
+            <img :src="item.src" class="custom-carousel-item-image">
+            <v-card-subtitle class="text-center">{{ item.marca }}</v-card-subtitle>
+            <v-card-title>
+              <h2 class="text-center">{{ item.description }}</h2>
+            </v-card-title>
+            <v-card-text class="text-center">{{ item.code }}</v-card-text>
+            <v-card-actions class="custom-carousel-item-actions">
+              <h3>{{ item.price }}</h3>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
 export default {
-  name: 'carouselHome',
-  data() {
-    return {
-      slides: [
-        {imageUrl: require('@/assets/img1.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$10', marca: 'ejemploMarca', code: 'Numero de parte: #001'},
-        {imageUrl: require('@/assets/img2.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$20', marca: 'ejemploMarca', code: 'Numero de parte: #002'},
-        {imageUrl: require('@/assets/img3.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$30', marca: 'ejemploMarca', code: 'Numero de parte: #003'},
-        {imageUrl: require('@/assets/img4.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$40', marca: 'ejemploMarca', code: 'Numero de parte: #004'},
-        {imageUrl: require('@/assets/img5.png'), description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut tellus vitae nibh tristique vestibulum. Sed facilisis ipsum nec metus placerat, eget aliquet lectus blandit.', price: '$50', marca: 'ejemploMarca', code: 'Numero de parte: #005'},
-      ],
-    }
-  }
+  data: () => ({
+    parallax: true,
+    items: [
+      {
+        src: require('@/assets/img1.png'),
+        description: 'Lorem ipsum dolor sit amet. ',
+        price: '$10',
+        marca: 'ejemploMarca',
+        code: 'Numero de parte: #001'
+      },
+      {
+        src: require('@/assets/img2.png'),
+        description: 'Lorem ipsum dolor sit amet.',
+        price: '$20',
+        marca: 'ejemploMarca',
+        code: 'Numero de parte: #002'
+      },
+      {
+        src: require('@/assets/img6.png'),
+        description: 'Lorem ipsum dolor sit amet.',
+        price: '$30',
+        marca: 'ejemploMarca',
+        code: 'Numero de parte: #003'
+      },
+      {
+        src: require('@/assets/img4.png'),
+        description: 'Lorem ipsum dolor sit amet.',
+        price: '$40',
+        marca: 'ejemploMarca',
+        code: 'Numero de parte: #004'
+      },
+      {
+        src: require('@/assets/img5.png'),
+        description: 'Lorem ipsum dolor sit amet.',
+        price: '$50',
+        marca: 'ejemploMarca',
+        code: 'Numero de parte: #005'
+      }
+    ]
+  })
 }
 </script>
 
-<style lang="scss" scoped>
-.carousel--sheet{
+<style scoped>
+.custom-carousel-item {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
 }
 
-.carousel--card{
-  border: 2px solid #E5E5E5;
-  background-color: #FAFAFA;
-  padding: 1%;
-  display: flex;
-  align-items: center;
+.custom-carousel-item-image {
+  max-height: 300px;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 20px;
 }
 
-.product--image--container{
-  width: 14%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 2px 2px 10px #6e1c06;
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
+.custom-carousel-item .text-center {
+  text-align: center;
+  white-space: normal ;
 }
 
-.v-card__text p {
-  font-size: 1.2rem;
+.custom-carousel {
+  border-radius: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  background-color: #666666;
+  background-image: linear-gradient(180deg, rgba(102,102,102,1) 0%, rgba(255,255,255,0) 100%), url('@/assets/fondoCarousel.png');
 }
 
-.v-card__subtitle, .v-card__title {
-  font-size: 1.3rem;
+.custom-carousel-item-actions {
+  position: absolute;
+  bottom: 10px;
+  left: 10px; /* cambia este valor para ajustar la posición del botón izquierdo */
+  right: 10px; /* cambia este valor para ajustar la posición del botón derecho */
 }
 </style>
